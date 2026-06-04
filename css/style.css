@@ -193,7 +193,7 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
 .modal { position: fixed; inset: 0; z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity var(--transition); }
 .modal-open { opacity: 1; pointer-events: all; }
 .modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.45); backdrop-filter: blur(4px); }
-.modal-box { position: relative; z-index: 1; background: var(--white); border-radius: var(--radius-xl); padding: 40px; max-width: 560px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); transform: scale(.95) translateY(20px); transition: transform var(--transition); }
+.modal-box { position: relative; z-index: 1; background: var(--white); border-radius: var(--radius-xl); padding: 40px; max-width: 1000px; width: min(1000px, calc(100vw - 24px)); max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); transform: scale(.95) translateY(20px); transition: transform var(--transition); }
 .modal-open .modal-box { transform: scale(1) translateY(0); }
 .modal-close { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: all var(--transition); border: none; cursor: pointer; background: none; }
 .modal-close:hover { background: var(--bg); color: var(--text); }
