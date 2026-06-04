@@ -788,7 +788,7 @@ function renderCart() {
           <p>Добавьте товары из каталога</p>
           <button class="btn btn-primary" onclick="showPage('catalog')">Перейти в каталог</button>
         </div>` : `
-        <div style="display:grid;grid-template-columns:1fr 360px;gap:40px;align-items:start">
+        <div style="display:grid;grid-template-columns:1fr;gap:40px;align-items:start">
           <div>
             <div id="cartItems">
               ${items.map(item => `
@@ -874,7 +874,7 @@ function renderCheckout() {
         <div class="checkout-step"><span class="step-num">2</span>Доставка</div>
         <div class="checkout-step"><span class="step-num">3</span>Подтверждение</div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 360px;gap:40px;align-items:start">
+      <div style="display:grid;grid-template-columns:1fr;gap:40px;align-items:start">
         <form id="checkoutForm" onsubmit="submitOrder(event)">
           <div style="background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--border);padding:28px;margin-bottom:20px">
             <h3 style="margin-bottom:20px;font-size:1rem">Контактные данные</h3>
