@@ -458,47 +458,49 @@ function showProduct(id) {
 
   const content = document.getElementById('productModalContent');
   content.innerHTML = `
-    <div style="display:flex;flex-direction:column">
-      <div class="gallery-main-wrap" id="galleryMainWrap">
-        ${arrowsHtml}
-        <img class="gallery-main-img" src="${images[0]}" alt="${p.name}" id="modalMainImg">
-        ${total > 1 ? `<div class="gallery-counter">1 / ${total}</div>` : ''}
+    <div class="product-page-grid">
+      <div style="display:flex;flex-direction:column">
+        <div class="gallery-main-wrap" id="galleryMainWrap">
+          ${arrowsHtml}
+          <img class="gallery-main-img" src="${images[0]}" alt="${p.name}" id="modalMainImg">
+          ${total > 1 ? `<div class="gallery-counter">1 / ${total}</div>` : ''}
+        </div>
+        ${thumbsHtml}
       </div>
-      ${thumbsHtml}
-    </div>
-    <div style="padding:36px;overflow-y:auto;max-height:90vh">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-        <span class="tag">${CATEGORIES.find(c => c.id === p.category)?.name || ''}</span>
-        ${p.badge ? `<span class="card-badge badge-${p.badge}">${p.badge === 'new' ? 'Новинка' : p.badge === 'sale' ? 'Скидка' : 'Хит'}</span>` : ''}
-      </div>
-      <h2 style="font-size:1.5rem;margin-bottom:8px">${p.name}</h2>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;color:var(--text-muted);font-size:14px">
-        <span style="color:#f09840">${Format.stars(p.rating)}</span>
-        <span>${p.rating} (${p.reviews} отзывов)</span>
-      </div>
-      <div class="product-price-block">
-        <span class="product-price">${Format.price(p.price)}</span>
-        ${p.oldPrice ? `<span class="product-price-old">${Format.price(p.oldPrice)}</span>` : ''}
-      </div>
-      <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px;line-height:1.65">${p.description}</p>
-      ${p.features ? `<ul class="product-features">${p.features.map(f => `<li>${f}</li>`).join('')}</ul>` : ''}
-      <div class="product-actions">
-        ${p.inStock
-          ? `<button class="btn btn-primary" onclick="Cart.add(${p.id});Modal.close('productModal')">
-               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                 <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                 <line x1="3" y1="6" x2="21" y2="6"/>
-                 <path d="M16 10a4 4 0 01-8 0"/>
-               </svg>В корзину
-             </button>`
-          : '<span class="btn-unavailable">Нет в наличии</span>'
-        }
-        <button class="btn btn-outline ${isFav ? 'is-fav' : ''}" data-fav="${p.id}" onclick="Favorites.toggle(${p.id})">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-          </svg>
-          ${isFav ? 'В избранном' : 'В избранное'}
-        </button>
+      <div style="padding:36px;overflow-y:auto;max-height:90vh">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span class="tag">${CATEGORIES.find(c => c.id === p.category)?.name || ''}</span>
+          ${p.badge ? `<span class="card-badge badge-${p.badge}">${p.badge === 'new' ? 'Новинка' : p.badge === 'sale' ? 'Скидка' : 'Хит'}</span>` : ''}
+        </div>
+        <h2 style="font-size:1.5rem;margin-bottom:8px">${p.name}</h2>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;color:var(--text-muted);font-size:14px">
+          <span style="color:#f09840">${Format.stars(p.rating)}</span>
+          <span>${p.rating} (${p.reviews} отзывов)</span>
+        </div>
+        <div class="product-price-block">
+          <span class="product-price">${Format.price(p.price)}</span>
+          ${p.oldPrice ? `<span class="product-price-old">${Format.price(p.oldPrice)}</span>` : ''}
+        </div>
+        <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px;line-height:1.65">${p.description}</p>
+        ${p.features ? `<ul class="product-features">${p.features.map(f => `<li>${f}</li>`).join('')}</ul>` : ''}
+        <div class="product-actions">
+          ${p.inStock
+            ? `<button class="btn btn-primary" onclick="Cart.add(${p.id});Modal.close('productModal')">
+                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                   <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                   <line x1="3" y1="6" x2="21" y2="6"/>
+                   <path d="M16 10a4 4 0 01-8 0"/>
+                 </svg>В корзину
+               </button>`
+            : '<span class="btn-unavailable">Нет в наличии</span>'
+          }
+          <button class="btn btn-outline ${isFav ? 'is-fav' : ''}" data-fav="${p.id}" onclick="Favorites.toggle(${p.id})">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+            ${isFav ? 'В избранном' : 'В избранное'}
+          </button>
+        </div>
       </div>
     </div>`;
 
