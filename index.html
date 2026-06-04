@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Дачный Дом — премиальная садовая мебель. Качели, беседки, шезлонги, комплекты мебели для дачи и загородного дома.">
+  <meta name="keywords" content="садовая мебель, качели, беседки, шезлонги, дача, терраса, мебель для сада">
+  <meta property="og:title" content="Дачный Дом — Садовая мебель премиум класса">
+  <meta property="og:description" content="Качели, беседки, шезлонги, комплекты мебели для дачи и загородного дома.">
+  <meta property="og:type" content="website">
+  <title>Дачный Дом — Садовая мебель премиум</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ╔══════════════════════════════════════════════╗ -->
+<!-- ║               НАВИГАЦИЯ                      ║ -->
+<!-- ╚══════════════════════════════════════════════╝ -->
+<nav class="navbar" id="navbar" role="navigation" aria-label="Главная навигация">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" onclick="showPage('home');return false">
+        <svg width="22" height="65" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        Дачный<span>Дом</span>
+      </a>
+      <div class="nav-menu" id="navMenu">
+        <a href="#" class="nav-link" onclick="showPage('home');closeMenu();return false">Главная</a>
+        <a href="#" class="nav-link" onclick="showPage('catalog');closeMenu();return false">Каталог</a>
+        <a href="#" class="nav-link" onclick="showPage('categories');closeMenu();return false">Категории</a>
+        <a href="#" class="nav-link" onclick="showPage('delivery');closeMenu();return false">Доставка</a>
+        <a href="#" class="nav-link" onclick="showPage('reviews');closeMenu();return false">Отзывы</a>
+        <a href="#" class="nav-link" onclick="showPage('contacts');closeMenu();return false">Контакты</a>
+      </div>
+      <div class="nav-actions">
+        <a href="#" class="nav-btn" onclick="showPage('favorites');return false" aria-label="Избранное" title="Избранное">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+          <span class="fav-badge"></span>
+        </a>
+        <a href="#" class="nav-btn" onclick="showPage('cart');return false" aria-label="Корзина" title="Корзина">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          <span class="cart-badge"></span>
+        </a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Меню">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ╔══════════════════════════════════════════════╗ -->
+<!-- ║            КОНТЕЙНЕР СТРАНИЦ                 ║ -->
+<!-- ╚══════════════════════════════════════════════╝ -->
+<main id="pageContainer"></main>
+
+<!-- ╔══════════════════════════════════════════════╗ -->
+<!-- ║                 ФУТЕР                        ║ -->
+<!-- ╚══════════════════════════════════════════════╝ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">🌿 Дачный Дом</div>
+        <p class="footer-desc">Премиальная садовая мебель для вашего загородного отдыха. Качество, которое служит годами.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Каталог</h4>
+        <div class="footer-links">
+          <a href="#" class="footer-link" onclick="filterAndShow('swings');return false">Садовые качели</a>
+          <a href="#" class="footer-link" onclick="filterAndShow('gazebos');return false">Беседки</a>
+          <a href="#" class="footer-link" onclick="filterAndShow('loungers');return false">Шезлонги</a>
+          <a href="#" class="footer-link" onclick="filterAndShow('sets');return false">Комплекты</a>
+          <a href="#" class="footer-link" onclick="showPage('catalog');return false">Все товары</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Покупателям</h4>
+        <div class="footer-links">
+          <a href="#" class="footer-link" onclick="showPage('delivery');return false">Доставка и оплата</a>
+          <a href="#" class="footer-link" onclick="showPage('reviews');return false">Отзывы</a>
+          <a href="#" class="footer-link" onclick="showPage('contacts');return false">Контакты</a>
+          <a href="#" class="footer-link" onclick="showPage('privacy');return false">Конфиденциальность</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Контакты</h4>
+        <div class="footer-contacts">
+          <div class="footer-contact">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/>
+            </svg>
+            <span id="footerPhone"></span>
+          </div>
+          <div class="footer-contact">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <span id="footerEmail"></span>
+          </div>
+          <div class="footer-contact">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <span id="footerHours"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Дачный Дом. Все права защищены.</span>
+      <div style="display:flex;gap:16px">
+        <a href="#" onclick="showPage('privacy');return false">Политика конфиденциальности</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ╔══════════════════════════════════════════════╗ -->
+<!-- ║         МОДАЛЬНОЕ ОКНО ТОВАРА                ║ -->
+<!-- ╚══════════════════════════════════════════════╝ -->
+<div class="modal" id="productModal" role="dialog" aria-modal="true" aria-labelledby="modalProductTitle">
+  <div class="modal-overlay"></div>
+  <div class="modal-box" style="max-width:860px;padding:0;overflow:hidden">
+    <button class="modal-close" onclick="Modal.close('productModal')" aria-label="Закрыть"
+      style="top:12px;right:12px;z-index:2;background:rgba(255,255,255,0.9)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div id="productModalContent" style="display:grid;grid-template-columns:1fr 1fr;min-height:400px"></div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════╗ -->
+<!-- ║                 СКРИПТЫ                      ║ -->
+<!-- ╚══════════════════════════════════════════════╝ -->
+<script src="js/products.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
