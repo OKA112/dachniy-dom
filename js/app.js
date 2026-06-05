@@ -580,7 +580,6 @@ function renderHome() {
           return `<button class="category-card animate-on-scroll"
             onclick="filterAndShow('${cat.id}')"
             style="border:none;cursor:pointer;background:var(--white);text-align:center;padding:20px 12px">
-            <div style="font-size:32px;margin-bottom:10px">${cat.icon}</div>
             <div class="category-card-name">${cat.name}</div>
             <div class="category-card-count">${count} товаров</div>
           </button>`;
@@ -754,7 +753,6 @@ function renderCategories() {
           return `<button class="category-card" onclick="filterAndShow('${cat.id}')" style="border:none;cursor:pointer;text-align:left">
             <img class="category-card-img" src="${catImages[cat.id] || ''}" alt="${cat.name}" loading="lazy">
             <div class="category-card-body">
-              <div class="category-card-icon">${cat.icon}</div>
               <div class="category-card-name">${cat.name}</div>
               <div class="category-card-count">${count} товаров</div>
             </div>
