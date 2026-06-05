@@ -199,6 +199,20 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
 .modal-close:hover { background: var(--bg); color: var(--text); }
 
 /* ─── PRODUCT GALLERY (MODAL) ──────────────────── */
+.modal-product-layout {
+  display: grid;
+  grid-template-columns: 420px minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
+}
+
+.modal-product-info {
+  min-width: 0;
+}
+
+.modal-product-info h2 {
+  word-break: break-word;
+}
 .gallery-main-wrap {
   background: var(--green-pale);
   display: flex;
@@ -471,6 +485,10 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
 
   .product-price {
     font-size: 1.6rem;
+  }
+  .modal-product-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
 }
 @media (max-width: 480px) {
