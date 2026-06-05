@@ -1,4 +1,4 @@
-/ * ═══════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════
    ДАЧНЫЙ ДОМ — КОНФИГУРАЦИЯ И ДАННЫЕ ТОВАРОВ
    ═══════════════════════════════════════════════════════ */
 
@@ -19,14 +19,14 @@ const CONFIG = {
 };
 
 const CATEGORIES = [
-  { id: 'all',     name: 'Все товары',       icon: 'images/icons/all.svg' },
-  { id: 'swings',  name: 'Садовые качели',   icon: 'images/icons/swings.svg' },
-  { id: 'gazebos', name: 'Беседки',          icon: 'images/icons/gazebos.svg' },
-  { id: 'loungers',name: 'Шезлонги',         icon: 'images/icons/loungers.svg' },
-  { id: 'sets',    name: 'Комплекты мебели', icon: 'images/icons/sets.svg' },
-  { id: 'dining',  name: 'Столовые группы',  icon: 'images/icons/dining.svg' },
-  { id: 'terrace', name: 'Терраса',          icon: 'images/icons/terrace.svg' },
-  { id: 'storage', name: 'Хранение',         icon: 'images/icons/storage.svg' },
+  { id: 'all',     name: 'Все товары' },
+  { id: 'swings',  name: 'Садовые качели' },
+  { id: 'gazebos', name: 'Беседки' },
+  { id: 'loungers',name: 'Шезлонги' },
+  { id: 'sets',    name: 'Комплекты мебели' },
+  { id: 'dining',  name: 'Столовые группы' },
+  { id: 'terrace', name: 'Терраса' },
+  { id: 'storage', name: 'Хранение' },
 ];
 
 const PRODUCTS = [
