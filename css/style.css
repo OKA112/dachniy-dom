@@ -469,11 +469,16 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
   .footer-grid { grid-template-columns: 1fr; gap: 28px; }
   .footer-bottom { flex-direction: column; text-align: center; }
   .container { padding: 0 16px; }
-  .modal-box { padding: 28px 20px; }
+  .modal-box {
+    width: calc(100vw - 16px);
+    max-width: 100%;
+    padding: 16px;
+    max-height: 95vh;
+  }
   .toast-container { bottom: 16px; right: 16px; left: 16px; }
   .toast { max-width: 100%; }
   .gallery-main-wrap { min-height: 220px; }
-  .gallery-main-img { max-height: 260px; }
+  .gallery-main-img { max-height: 320px; }
 
   .checkout-steps {
     flex-direction: column;
@@ -486,7 +491,17 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
 
   .product-page-grid {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 20px;
+  }
+
+  .product-gallery-column {
+    width: 100%;
+  }
+
+  .product-info-column {
+    min-width: 0;
+    width: 100%;
+    padding: 0;
   }
 
   .product-gallery-thumbs {
@@ -504,7 +519,7 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
   }
 
   .product-price {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
   }
   .modal-product-layout {
     grid-template-columns: 1fr;
