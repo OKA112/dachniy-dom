@@ -190,78 +190,77 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
 .badge-pop { animation: badgePop .4s ease; }
 
 /* ─── MODAL ────────────────────────────────────── */
-.modal { position: fixed; inset: 0; z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity var(--transition); }
+.modal { position: fixed; inset: 0; z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 16px; opacity: 0; pointer-events: none; transition: opacity var(--transition); }
 .modal-open { opacity: 1; pointer-events: all; }
-.modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.45); backdrop-filter: blur(4px); }
-.modal-box { position: relative; z-index: 1; background: var(--white); border-radius: var(--radius-xl); padding: 40px; max-width: 1000px; width: min(1000px, calc(100vw - 24px)); max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); transform: scale(.95) translateY(20px); transition: transform var(--transition); }
+.modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.5); backdrop-filter: blur(4px); }
+.modal-box { position: relative; z-index: 1; background: var(--white); border-radius: var(--radius-xl); max-width: 900px; width: 100%; max-height: 92vh; overflow: hidden; box-shadow: var(--shadow-lg); transform: scale(.96) translateY(16px); transition: transform var(--transition); display: flex; flex-direction: column; }
 .modal-open .modal-box { transform: scale(1) translateY(0); }
-.modal-close { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: all var(--transition); border: none; cursor: pointer; background: none; }
-.modal-close:hover { background: var(--bg); color: var(--text); }
+.modal-close { position: absolute; top: 12px; right: 12px; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text); background: rgba(255,255,255,.92); backdrop-filter: blur(6px); box-shadow: var(--shadow-sm); transition: all var(--transition); border: none; cursor: pointer; z-index: 10; }
+.modal-close:hover { background: var(--green); color: white; }
 
-/* ─── PRODUCT GALLERY (MODAL) ──────────────────── */
-.modal-product-layout {
-  display: grid;
-  grid-template-columns: 420px minmax(0, 1fr);
-  gap: 40px;
-  align-items: start;
-}
+/* ─── PRODUCT MODAL LAYOUT ─────────────────────── */
+.pm-grid { display: grid; grid-template-columns: 1fr 1fr; min-height: 0; overflow: hidden; }
+.pm-gallery { display: flex; flex-direction: column; background: var(--green-pale); overflow: hidden; }
+.pm-info { padding: 32px 28px; overflow-y: auto; display: flex; flex-direction: column; gap: 0; }
 
-.modal-product-info {
-  min-width: 0;
-}
-
-.modal-product-info h2 {
-  word-break: break-word;
-}
+/* ─── PRODUCT GALLERY ──────────────────────────── */
 .gallery-main-wrap {
-  background: var(--green-pale);
+  flex: 1;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  position: relative;
-  min-height: 320px;
+  min-height: 260px;
+  overflow: hidden;
+  cursor: zoom-in;
 }
 .gallery-main-img {
   max-width: 100%;
-  max-height: 420px;
+  max-height: 400px;
   width: 100%;
-  height: 100%;
   object-fit: contain;
-  transition: opacity .25s ease;
+  transition: opacity .2s ease;
+  display: block;
+  padding: 16px;
 }
 .gallery-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
+  width: 38px; height: 38px;
   border-radius: 50%;
-  background: rgba(255,255,255,.9);
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: rgba(255,255,255,.92);
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
   color: var(--text);
   box-shadow: var(--shadow-sm);
   transition: all var(--transition);
   z-index: 2;
 }
-.gallery-arrow:hover { background: var(--green); color: white; box-shadow: var(--shadow-md); }
-.gallery-arrow-prev { left: 12px; }
-.gallery-arrow-next { right: 12px; }
+.gallery-arrow:hover { background: var(--green); color: white; }
+.gallery-arrow-prev { left: 10px; }
+.gallery-arrow-next { right: 10px; }
+.gallery-counter {
+  position: absolute;
+  bottom: 10px; right: 12px;
+  background: rgba(0,0,0,.42);
+  color: white;
+  font-size: 11px; font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 100px;
+  pointer-events: none;
+}
 .gallery-thumbs {
   display: flex;
   gap: 8px;
-  padding: 12px 16px;
+  padding: 10px 14px;
   background: var(--white);
   border-top: 1px solid var(--border);
   flex-wrap: wrap;
+  flex-shrink: 0;
 }
 .gallery-thumb {
-  width: 60px;
-  height: 60px;
+  width: 56px; height: 56px;
   border-radius: var(--radius-sm);
   overflow: hidden;
   cursor: pointer;
@@ -271,16 +270,31 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
 }
 .gallery-thumb.active { border-color: var(--green); }
 .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
-.gallery-counter {
-  position: absolute;
-  bottom: 12px;
-  right: 12px;
-  background: rgba(0,0,0,.45);
-  color: white;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 3px 9px;
-  border-radius: 100px;
+
+/* ─── LIGHTBOX ─────────────────────────────────── */
+.lightbox { position: fixed; inset: 0; z-index: 3000; background: rgba(0,0,0,.92); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .25s ease; }
+.lightbox.lb-open { opacity: 1; pointer-events: all; }
+.lightbox-img { max-width: 92vw; max-height: 92vh; object-fit: contain; border-radius: var(--radius); box-shadow: 0 0 60px rgba(0,0,0,.6); }
+.lightbox-close { position: absolute; top: 16px; right: 16px; width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,.15); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background var(--transition); }
+.lightbox-close:hover { background: rgba(255,255,255,.3); }
+.lightbox .gallery-arrow { background: rgba(255,255,255,.15); color: white; width: 46px; height: 46px; }
+.lightbox .gallery-arrow:hover { background: var(--green); }
+.lightbox .gallery-counter { bottom: 20px; right: 50%; transform: translateX(50%); font-size: 14px; padding: 5px 14px; }
+
+/* ─── PM INFO ELEMENTS ─────────────────────────── */
+.pm-info .product-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+
+/* ─── RESPONSIVE PRODUCT MODAL ─────────────────── */
+@media (max-width: 680px) {
+  .modal { padding: 0; align-items: flex-end; }
+  .modal-box { border-radius: var(--radius-xl) var(--radius-xl) 0 0; max-height: 96vh; }
+  .pm-grid { grid-template-columns: 1fr; }
+  .pm-gallery { max-height: 56vw; min-height: 200px; }
+  .gallery-main-img { max-height: 100%; padding: 10px; }
+  .pm-info { padding: 20px 18px 28px; }
+  .pm-info .product-actions .btn { flex: 1 1 100%; justify-content: center; }
+  .gallery-thumbs { padding: 8px 12px; }
+  .gallery-thumb { width: 48px; height: 48px; }
 }
 
 /* ─── INFO CARDS ───────────────────────────────── */

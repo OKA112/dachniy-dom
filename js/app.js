@@ -322,53 +322,77 @@ const Leads = {
    ГАЛЕРЕЯ ТОВАРА
    ═══════════════════════════════════════════════════════ */
 const Gallery = {
-  _currentIndex: 0,
+  _idx: 0,
   _images: [],
-  _productId: null,
 
   init(productId, startIndex = 0) {
     const product = PRODUCTS.find(p => p.id === productId);
     if (!product) return;
-    this._productId    = productId;
-    this._images       = product.images && product.images.length ? product.images : [product.image];
-    this._currentIndex = startIndex;
+    this._images = product.images?.length ? product.images : [product.image];
+    this._idx    = startIndex;
     this._render();
   },
 
   _render() {
-    const wrap = document.getElementById('galleryMainWrap');
-    if (!wrap) return;
-    const img   = wrap.querySelector('.gallery-main-img');
-    const ctr   = wrap.querySelector('.gallery-counter');
-    const total = this._images.length;
+    const img = document.querySelector('#galleryMainWrap .gallery-main-img');
     if (img) {
       img.style.opacity = '0';
-      setTimeout(() => {
-        img.src         = this._images[this._currentIndex];
-        img.style.opacity = '1';
-      }, 120);
+      setTimeout(() => { img.src = this._images[this._idx]; img.style.opacity = '1'; }, 120);
     }
-    if (ctr) ctr.textContent = `${this._currentIndex + 1} / ${total}`;
-
-    // Обновляем миниатюры
-    document.querySelectorAll('.gallery-thumb').forEach((th, i) => {
-      th.classList.toggle('active', i === this._currentIndex);
+    document.querySelectorAll('.gallery-counter').forEach(el => {
+      el.textContent = `${this._idx + 1} / ${this._images.length}`;
     });
+    document.querySelectorAll('.gallery-thumb').forEach((th, i) => {
+      th.classList.toggle('active', i === this._idx);
+    });
+    const lbImg = document.querySelector('#lightbox .lightbox-img');
+    if (lbImg) lbImg.src = this._images[this._idx];
   },
 
-  prev() {
-    this._currentIndex = (this._currentIndex - 1 + this._images.length) % this._images.length;
-    this._render();
+  prev() { this._idx = (this._idx - 1 + this._images.length) % this._images.length; this._render(); },
+  next() { this._idx = (this._idx + 1) % this._images.length; this._render(); },
+  goTo(i) { this._idx = i; this._render(); },
+
+  openLightbox() {
+    let lb = document.getElementById('lightbox');
+    if (!lb) {
+      lb = document.createElement('div');
+      lb.className = 'lightbox';
+      lb.id        = 'lightbox';
+      lb.innerHTML = `
+        <img class="lightbox-img" src="${this._images[this._idx]}" alt="">
+        <button class="lightbox-close" onclick="Gallery.closeLightbox()" aria-label="Закрыть">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+        ${this._images.length > 1 ? `
+          <button class="gallery-arrow gallery-arrow-prev" onclick="Gallery.prev()" aria-label="Назад">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button class="gallery-arrow gallery-arrow-next" onclick="Gallery.next()" aria-label="Вперёд">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <div class="gallery-counter">${this._idx + 1} / ${this._images.length}</div>` : ''}`;
+      lb.addEventListener('click', e => { if (e.target === lb) this.closeLightbox(); });
+      let sx = 0;
+      lb.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+      lb.addEventListener('touchend',   e => {
+        const d = sx - e.changedTouches[0].clientX;
+        if (Math.abs(d) > 40) d > 0 ? Gallery.next() : Gallery.prev();
+      }, { passive: true });
+      document.body.appendChild(lb);
+    } else {
+      const lbImg = lb.querySelector('.lightbox-img');
+      if (lbImg) lbImg.src = this._images[this._idx];
+    }
+    requestAnimationFrame(() => lb.classList.add('lb-open'));
+    document.body.style.overflow = 'hidden';
   },
 
-  next() {
-    this._currentIndex = (this._currentIndex + 1) % this._images.length;
-    this._render();
-  },
-
-  goTo(index) {
-    this._currentIndex = index;
-    this._render();
+  closeLightbox() {
+    const lb = document.getElementById('lightbox');
+    if (lb) lb.classList.remove('lb-open');
   },
 };
 
@@ -431,94 +455,94 @@ function showProduct(id) {
   if (!p) return;
 
   const isFav  = Favorites.has(p.id);
-  const images = p.images && p.images.length ? p.images : [p.image];
-  const total  = images.length;
+  const images = p.images?.length ? p.images : [p.image];
+  const multi  = images.length > 1;
 
-  const thumbsHtml = total > 1
+  const thumbsHtml = multi
     ? `<div class="gallery-thumbs">
         ${images.map((src, i) => `
           <div class="gallery-thumb${i === 0 ? ' active' : ''}" onclick="Gallery.goTo(${i})">
-            <img src="${src}" alt="${p.name} фото ${i + 1}" loading="lazy">
+            <img src="${src}" alt="${p.name} ${i + 1}" loading="lazy">
           </div>`).join('')}
        </div>`
     : '';
 
-  const arrowsHtml = total > 1
-    ? `<button class="gallery-arrow gallery-arrow-prev" onclick="Gallery.prev()" aria-label="Назад">
-         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-           <polyline points="15 18 9 12 15 6"/>
-         </svg>
+  const arrowsHtml = multi
+    ? `<button class="gallery-arrow gallery-arrow-prev" onclick="event.stopPropagation();Gallery.prev()" aria-label="Назад">
+         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
        </button>
-       <button class="gallery-arrow gallery-arrow-next" onclick="Gallery.next()" aria-label="Вперёд">
-         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-           <polyline points="9 18 15 12 9 6"/>
-         </svg>
+       <button class="gallery-arrow gallery-arrow-next" onclick="event.stopPropagation();Gallery.next()" aria-label="Вперёд">
+         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
        </button>`
     : '';
 
-  const content = document.getElementById('productModalContent');
-  content.innerHTML = `
-    <div class="product-page-grid">
-      <div class="product-gallery-column">
-        <div class="gallery-main-wrap" id="galleryMainWrap">
+  const badgeLabel = { new: 'Новинка', sale: 'Скидка', hit: 'Хит' };
+  const badgeHtml  = p.badge ? `<span class="card-badge badge-${p.badge}">${badgeLabel[p.badge] || ''}</span>` : '';
+  const catName    = CATEGORIES.find(c => c.id === p.category)?.name || '';
+  const featuresHtml = p.features?.length
+    ? `<ul class="product-features">${p.features.map(f => `<li>${f}</li>`).join('')}</ul>` : '';
+
+  const addBtn = p.inStock
+    ? `<button class="btn btn-primary" onclick="Cart.add(${p.id});Modal.close('productModal')">
+         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+           <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+           <line x1="3" y1="6" x2="21" y2="6"/>
+           <path d="M16 10a4 4 0 01-8 0"/>
+         </svg>В корзину
+       </button>`
+    : '<span class="btn-unavailable">Нет в наличии</span>';
+
+  const favBtn = `
+    <button class="btn btn-outline${isFav ? ' is-fav' : ''}" data-fav="${p.id}"
+      onclick="Favorites.toggle(${p.id}); this.classList.toggle('is-fav')">
+      <svg width="15" height="15" viewBox="0 0 24 24"
+        fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>${isFav ? 'В избранном' : 'В избранное'}
+    </button>`;
+
+  document.getElementById('productModalContent').innerHTML = `
+    <div class="pm-grid">
+      <div class="pm-gallery">
+        <div class="gallery-main-wrap" id="galleryMainWrap" onclick="Gallery.openLightbox()" title="Открыть на весь экран">
           ${arrowsHtml}
-          <img class="gallery-main-img" src="${images[0]}" alt="${p.name}" id="modalMainImg">
-          ${total > 1 ? `<div class="gallery-counter">1 / ${total}</div>` : ''}
+          <img class="gallery-main-img" src="${images[0]}" alt="${p.name}">
+          ${multi ? `<div class="gallery-counter">1 / ${images.length}</div>` : ''}
         </div>
         ${thumbsHtml}
       </div>
-      <div class="product-info-column">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-          <span class="tag">${CATEGORIES.find(c => c.id === p.category)?.name || ''}</span>
-          ${p.badge ? `<span class="card-badge badge-${p.badge}">${p.badge === 'new' ? 'Новинка' : p.badge === 'sale' ? 'Скидка' : 'Хит'}</span>` : ''}
+      <div class="pm-info">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+          <span class="tag">${catName}</span>${badgeHtml}
         </div>
-        <h2 style="font-size:1.5rem;margin-bottom:8px">${p.name}</h2>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;color:var(--text-muted);font-size:14px">
-          <span style="color:#f09840">${Format.stars(p.rating)}</span>
-          <span>${p.rating} (${p.reviews} отзывов)</span>
+        <h2 style="font-size:clamp(1.1rem,2.5vw,1.5rem);margin-bottom:8px;line-height:1.25">${p.name}</h2>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;color:var(--text-muted);font-size:13px">
+          <span style="color:#f09840;font-size:14px">${Format.stars(p.rating)}</span>
+          <span>${p.rating} · ${p.reviews} отзывов</span>
         </div>
-        <div class="product-price-block">
+        <div class="product-price-block" style="margin-bottom:14px">
           <span class="product-price">${Format.price(p.price)}</span>
           ${p.oldPrice ? `<span class="product-price-old">${Format.price(p.oldPrice)}</span>` : ''}
         </div>
-        <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px;line-height:1.65">${p.description}</p>
-        ${p.features ? `<ul class="product-features">${p.features.map(f => `<li>${f}</li>`).join('')}</ul>` : ''}
-        <div class="product-actions">
-          ${p.inStock
-            ? `<button class="btn btn-primary" onclick="Cart.add(${p.id});Modal.close('productModal')">
-                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                   <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                   <line x1="3" y1="6" x2="21" y2="6"/>
-                   <path d="M16 10a4 4 0 01-8 0"/>
-                 </svg>В корзину
-               </button>`
-            : '<span class="btn-unavailable">Нет в наличии</span>'
-          }
-          <button class="btn btn-outline ${isFav ? 'is-fav' : ''}" data-fav="${p.id}" onclick="Favorites.toggle(${p.id})">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-            </svg>
-            ${isFav ? 'В избранном' : 'В избранное'}
-          </button>
-        </div>
+        <p style="color:var(--text-muted);font-size:14px;line-height:1.65;margin-bottom:14px">${p.description}</p>
+        ${featuresHtml}
+        <div class="product-actions">${addBtn}${favBtn}</div>
       </div>
     </div>`;
 
   Modal.open('productModal');
   Gallery.init(id, 0);
-
-  // Свайп на мобильных
   _initGallerySwipe();
 }
 
 function _initGallerySwipe() {
   const wrap = document.getElementById('galleryMainWrap');
   if (!wrap) return;
-  let startX = 0;
-  wrap.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-  wrap.addEventListener('touchend', e => {
-    const diff = startX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) diff > 0 ? Gallery.next() : Gallery.prev();
+  let sx = 0;
+  wrap.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+  wrap.addEventListener('touchend',   e => {
+    const d = sx - e.changedTouches[0].clientX;
+    if (Math.abs(d) > 40) d > 0 ? Gallery.next() : Gallery.prev();
   }, { passive: true });
 }
 
@@ -1359,11 +1383,15 @@ document.addEventListener('DOMContentLoaded', () => {
     Favorites.updateBadge();
   });
 
-  // Escape для модалей
+  // Escape для модалей и лайтбокса
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
+      const lb = document.getElementById('lightbox');
+      if (lb?.classList.contains('lb-open')) { Gallery.closeLightbox(); return; }
       document.querySelectorAll('.modal-open').forEach(m => Modal.close(m.id));
     }
+    if (e.key === 'ArrowLeft')  Gallery.prev();
+    if (e.key === 'ArrowRight') Gallery.next();
   });
 
   // Навигация браузером
