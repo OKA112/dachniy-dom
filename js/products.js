@@ -1,4 +1,4 @@
-/* ═══════════════════════════════════════════════════════
+/ * ═══════════════════════════════════════════════════════
    ДАЧНЫЙ ДОМ — КОНФИГУРАЦИЯ И ДАННЫЕ ТОВАРОВ
    ═══════════════════════════════════════════════════════ */
 
@@ -19,15 +19,14 @@ const CONFIG = {
 };
 
 const CATEGORIES = [
-  { id: 'all',     name: 'Все товары',        icon: '🛒' },
-  { id: 'swings',  name: 'Садовые качели',    icon: '🪑' },
-  { id: 'gazebos', name: 'Беседки',           icon: '🏡' },
-  { id: 'loungers',name: 'Шезлонги',          icon: '🌴' },
-  { id: 'sets',    name: 'Комплекты мебели',  icon: '🪵' },
-  { id: 'tables',  name: 'Столы',             icon: '🪞' },
-  { id: 'chairs',  name: 'Стулья',            icon: '🪑' },
-  { id: 'terrace', name: 'Терраса',           icon: '🌿' },
-  { id: 'storage', name: 'Хранение',          icon: '📦' },
+  { id: 'all',     name: 'Все товары',       icon: 'images/icons/all.svg' },
+  { id: 'swings',  name: 'Садовые качели',   icon: 'images/icons/swings.svg' },
+  { id: 'gazebos', name: 'Беседки',          icon: 'images/icons/gazebos.svg' },
+  { id: 'loungers',name: 'Шезлонги',         icon: 'images/icons/loungers.svg' },
+  { id: 'sets',    name: 'Комплекты мебели', icon: 'images/icons/sets.svg' },
+  { id: 'dining',  name: 'Столовые группы',  icon: 'images/icons/dining.svg' },
+  { id: 'terrace', name: 'Терраса',          icon: 'images/icons/terrace.svg' },
+  { id: 'storage', name: 'Хранение',         icon: 'images/icons/storage.svg' },
 ];
 
 const PRODUCTS = [
@@ -174,7 +173,7 @@ const PRODUCTS = [
   },
   {
     id: 9,
-    category: 'tables',
+    category: 'dining',
     name: 'Стол складной «Пикник»',
     price: 4990,
     oldPrice: 6990,
@@ -192,7 +191,7 @@ const PRODUCTS = [
   },
   {
     id: 10,
-    category: 'tables',
+    category: 'dining',
     name: 'Стол обеденный «Терраса»',
     price: 19990,
     oldPrice: null,
@@ -210,7 +209,7 @@ const PRODUCTS = [
   },
   {
     id: 11,
-    category: 'chairs',
+    category: 'dining',
     name: 'Кресло «Ротанг»',
     price: 8990,
     oldPrice: 11990,
@@ -228,7 +227,7 @@ const PRODUCTS = [
   },
   {
     id: 12,
-    category: 'chairs',
+    category: 'dining',
     name: 'Стул складной «Дача»',
     price: 2990,
     oldPrice: null,
