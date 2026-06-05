@@ -459,7 +459,7 @@ function showProduct(id) {
   const content = document.getElementById('productModalContent');
   content.innerHTML = `
     <div class="product-page-grid">
-      <div style="display:flex;flex-direction:column">
+      <div class="product-gallery-column">
         <div class="gallery-main-wrap" id="galleryMainWrap">
           ${arrowsHtml}
           <img class="gallery-main-img" src="${images[0]}" alt="${p.name}" id="modalMainImg">
@@ -467,7 +467,7 @@ function showProduct(id) {
         </div>
         ${thumbsHtml}
       </div>
-      <div style="padding:36px;overflow-y:auto;max-height:90vh">
+      <div class="product-info-column">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
           <span class="tag">${CATEGORIES.find(c => c.id === p.category)?.name || ''}</span>
           ${p.badge ? `<span class="card-badge badge-${p.badge}">${p.badge === 'new' ? 'Новинка' : p.badge === 'sale' ? 'Скидка' : 'Хит'}</span>` : ''}
