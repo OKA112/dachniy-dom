@@ -330,12 +330,29 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
 /* ─── PRODUCT PAGE ─────────────────────────────── */
 .product-page-grid {
   display: grid;
-  grid-template-columns: minmax(380px, 520px) minmax(0, 1fr);
-  gap: 40px;
+  grid-template-columns: 520px 1fr;
+  gap: 48px;
   align-items: start;
 }
 .product-page-grid > div:last-child {
   min-width: 0;
+}
+ 
+.product-gallery-column {
+  width: 520px;
+}
+
+.product-info-column {
+  width: 100%;
+  min-width: 0;
+}
+
+.product-info-column h2,
+.product-info-column p,
+.product-info-column li,
+.product-info-column span {
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 .product-gallery-main { border-radius: var(--radius-xl); overflow: hidden; aspect-ratio: 1/.85; background: var(--green-pale); }
 .product-gallery-main img { width: 100%; height: 100%; object-fit: cover; }
