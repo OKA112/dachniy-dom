@@ -292,7 +292,14 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
   .pm-gallery { max-height: 56vw; min-height: 200px; }
   .gallery-main-img { max-height: 100%; padding: 10px; }
   .pm-info { padding: 20px 18px 28px; }
-  .pm-info .product-actions .btn { flex: 1 1 100%; justify-content: center; }
+  .pm-info .product-actions .btn,
+  .pm-info .product-actions .btn-add {
+    flex: 1 1 100%;
+    justify-content: center;
+    padding: 10px 16px;
+    font-size: 14px;
+    min-height: 44px;
+  }
   .gallery-thumbs { padding: 8px 12px; }
   .gallery-thumb { width: 48px; height: 48px; }
 }
