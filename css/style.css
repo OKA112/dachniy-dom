@@ -292,13 +292,17 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
   .pm-gallery { max-height: 56vw; min-height: 200px; }
   .gallery-main-img { max-height: 100%; padding: 10px; }
   .pm-info { padding: 20px 18px 28px; }
-  .pm-info .product-actions .btn,
+  .pm-info h2 { margin-bottom: 4px !important; }
+  .pm-info .product-price-block { margin-bottom: 8px !important; }
+  .pm-info p { margin-bottom: 8px !important; }
+  .pm-info > div[style] { margin-bottom: 6px !important; }
+.pm-info .product-actions .btn,
   .pm-info .product-actions .btn-add {
-    flex: 1 1 100%;
+    flex: 1 1 calc(50% - 5px);
     justify-content: center;
-    padding: 10px 16px;
-    font-size: 14px;
-    min-height: 44px;
+    padding: 9px 10px;
+    font-size: 13px;
+    min-height: 40px;
   }
   .gallery-thumbs { padding: 8px 12px; }
   .gallery-thumb { width: 48px; height: 48px; }
